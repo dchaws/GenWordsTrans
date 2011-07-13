@@ -69,7 +69,7 @@ int main (int argc, char *argv[])
         }
     }
 
-    cout << "S = " << S << ", T = " << T << ", selfLoops = " << selfLoops << endl;
+    //cout << "S = " << S << ", T = " << T << ", selfLoops = " << selfLoops << endl;
 
     vector <int> V;
     for (int i=0;i<T;i++)
