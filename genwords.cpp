@@ -35,11 +35,73 @@ void printVector (vector <int> &V)
     cout << setw(myWidth) << V[V.size()-1] << endl;
 }
 
+// This tries to increase the value of V[position]. 
+// Returns 1 on success, and 0 on failure.
+// if selfLoops == 1, then it simply tries to add 1.
+// if selfLoops == 0, then it will try to find the next 
+// largest integer so that there are no selfLoops
+int incPosVector (vector <int> &V, int position, int S, int selfLoops)
+{
+    if(V[position] >= S || V[position] < 0)
+    {
+        return 0;
+    }
+    if (selfLoops == 1)
+    {
+        V[position] = V[position] + 1;
+        return 1;
+    }
+    else if (selfLoops == 0)
+    {
+        int oldValue = V[position];
+        V[position] = V[position] + 1;
+        switch (position)
+        {
+            case 0:
+                while (V[position+1] == V[position])
+                {
+                    V[position] = V[position] + 1;
+                    if (V[position] > S)
+                    {
+                        V[position] = oldValue;
+                        return 0;
+                    }
+                }
+                break;
+            case V.size()-1:
+                while (V[position-1] == V[position])
+                {
+                    V[position] = V[position] + 1;
+                    if (V[position] > S)
+                    {
+                        V[position] = oldValue;
+                        return 0;
+                    }
+                }
+                break;
+            default:
+                while (V[position+1] == V[position] || V[position-1] == V[position])
+                {
+                    V[position] = V[position] + 1;
+                    if (V[position] > S)
+                    {
+                        V[position] = oldValue;
+                        return 0;
+                    }
+                }
+                break;
+        }
+        return 0;
+    }
+
+}
+
 // Takes in a vector V and increments it to the next
 // lexicographic vector. S is the upper limit on the vector values.
 // E.g. 111 -> 112 -> 113 -> 121 -> 122 -> 123 -> 131
 // Returns 1 on success, 0 on failure.
-int nextVector (vector <int> &V, int position, int S)
+// selfLoops == 1 means allow selfLoops. 0 not
+int nextVector (vector <int> &V, int position, int S, int selfLoops)
 {
     //cout << "[nextVector]: position = " << position << ", S = " << S << endl;
     //cout << "    ";
@@ -51,23 +113,36 @@ int nextVector (vector <int> &V, int position, int S)
     }
 
     // Try to increase position.
-    if (V[position] < S)
+    if (incPosVector (V,position,S,selfLoops))
     {
-        V[position] = V[position] + 1;
         return 1;
     }
-    else 
+
+    // Failed to increase if we get here.
+    if (position == 0)
     {
-        if (position == 0)
-        {
-            return 0;
-        }
-        for (int i=position;i<=S;i++)
+        return 0;
+    }
+    for (int i=position;i<=S;i++)
+    {
+        if (selfLoops == 1)
         {
             V[i] = 1;
         }
-        return nextVector(V,position-1,S);
+        else if (selfLoops == 0)
+        {
+            if (V[i-1] == 1)
+            {
+                V[i] = 2;
+            }
+            else
+            {
+                V[i] = 1;
+            }
+        }
+        
     }
+    return nextVector(V,position-1,S);
 }
 
 
@@ -99,7 +174,7 @@ int main (int argc, char *argv[])
         V.insert(V.begin(),1);
     }
 
-    while(nextVector(V,T-1,S))
+    while(nextVector(V,T-1,S,selfLoops))
     {
         printVector(V);
     }

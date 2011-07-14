@@ -19,6 +19,7 @@
 #include <iostream>
 #include <iomanip>
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -44,5 +45,8 @@ int main (int argc, char *argv[])
         }
     }
 
-    //cout << "S = " << S << ", T = " << T << ", selfLoops = " << selfLoops << endl;
+    cout << "S = " << S << ", T = " << T << ", selfLoops = " << selfLoops << endl;
+
+    
+    
 }
