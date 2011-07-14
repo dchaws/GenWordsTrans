@@ -21,6 +21,8 @@
 #include <iostream>
 #include <iomanip>
 #include <vector>
+#include <cstdlib>
+#include <string.h>
 
 using namespace std;
 

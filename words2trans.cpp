@@ -18,6 +18,8 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include <cstdlib>
+#include <string.h>
 
 using namespace std;
 
