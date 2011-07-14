@@ -50,6 +50,7 @@ int main (int argc, char *argv[])
     int transitions[S][S];
 
     string input;
+    cin >> input;
     while(cin.good())
     {
         // Zero out transitions
@@ -64,7 +65,6 @@ int main (int argc, char *argv[])
         int prevState = -1;
         for (int i=0;i<T;i++)
         {
-            cin >> input;
             //cout << input << endl;
             if (prevState != -1)
             {
@@ -73,6 +73,7 @@ int main (int argc, char *argv[])
                 transitions[prevState-1][curState-1]++;
             }
             prevState = atoi(input.c_str());
+            cin >> input;
         }
 
         for (int i=0;i<S;i++)
