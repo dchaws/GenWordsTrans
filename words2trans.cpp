@@ -18,7 +18,6 @@
 
 #include <iostream>
 #include <iomanip>
-#include <vector>
 #include <string>
 
 using namespace std;
@@ -45,8 +44,49 @@ int main (int argc, char *argv[])
         }
     }
 
-    cout << "S = " << S << ", T = " << T << ", selfLoops = " << selfLoops << endl;
+    //cout << "S = " << S << ", T = " << T << ", selfLoops = " << selfLoops << endl;
 
     
-    
+    int transitions[S][S];
+
+    string input;
+    while(cin.good())
+    {
+        // Zero out transitions
+        for (int i=0;i<S;i++)
+        {
+            for (int j=0;j<S;j++)
+            {
+                transitions[i][j] = 0;
+            }
+        }
+
+        int prevState = -1;
+        for (int i=0;i<T;i++)
+        {
+            cin >> input;
+            //cout << input << endl;
+            if (prevState != -1)
+            {
+                int curState = atoi(input.c_str());
+                //cout << "prevState = " << prevState << ", curState = " << curState << endl;
+                transitions[prevState-1][curState-1]++;
+            }
+            prevState = atoi(input.c_str());
+        }
+
+        for (int i=0;i<S;i++)
+        {
+            for (int j=0;j<S;j++)
+            {
+                if (i != j || selfLoops == 1)
+                {
+                    cout << setw(3) << transitions[i][j] << " ";
+                }
+            }
+        }
+        cout << endl;
+        
+    }
+     
 }

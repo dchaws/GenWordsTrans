@@ -122,25 +122,7 @@ int nextVector (vector <int> &V, int position, int S, int selfLoops)
         return 0;
     }
 
-
-//    for (int i=position;i<=S;i++)
-//    {
-//        if (selfLoops == 1)
-//        {
-//            V[i] = 1;
-//        }
-//        else if (selfLoops == 0)
-//        {
-//            if (V[i-1] == 1)
-//            {
-//                V[i] = 2;
-//            }
-//            else
-//            {
-//                V[i] = 1;
-//            }
-//        }
-//    }
+    // Temporarily set to -1
     V[position] = -1;
     if (nextVector(V,position-1,S,selfLoops) == 0)
     {
