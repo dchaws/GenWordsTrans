@@ -55,43 +55,43 @@ int incPosVector (vector <int> &V, int position, int S, int selfLoops)
     {
         int oldValue = V[position];
         V[position] = V[position] + 1;
-        switch (position)
+        if (position == 0)
         {
-            case 0:
-                while (V[position+1] == V[position])
+            while (V[position+1] == V[position])
+            {
+                V[position] = V[position] + 1;
+                if (V[position] > S)
                 {
-                    V[position] = V[position] + 1;
-                    if (V[position] > S)
-                    {
-                        V[position] = oldValue;
-                        return 0;
-                    }
+                    V[position] = oldValue;
+                    return 0;
                 }
-                break;
-            case V.size()-1:
-                while (V[position-1] == V[position])
-                {
-                    V[position] = V[position] + 1;
-                    if (V[position] > S)
-                    {
-                        V[position] = oldValue;
-                        return 0;
-                    }
-                }
-                break;
-            default:
-                while (V[position+1] == V[position] || V[position-1] == V[position])
-                {
-                    V[position] = V[position] + 1;
-                    if (V[position] > S)
-                    {
-                        V[position] = oldValue;
-                        return 0;
-                    }
-                }
-                break;
+            }
         }
-        return 0;
+        else if (position == V.size()-1)
+        {
+            while (V[position-1] == V[position])
+            {
+                V[position] = V[position] + 1;
+                if (V[position] > S)
+                {
+                    V[position] = oldValue;
+                    return 0;
+                }
+            }
+        }
+        else 
+        {
+            while (V[position+1] == V[position] || V[position-1] == V[position])
+            {
+                V[position] = V[position] + 1;
+                if (V[position] > S)
+                {
+                    V[position] = oldValue;
+                    return 0;
+                }
+            }
+        }
+        return 1;
     }
 
 }
@@ -103,9 +103,7 @@ int incPosVector (vector <int> &V, int position, int S, int selfLoops)
 // selfLoops == 1 means allow selfLoops. 0 not
 int nextVector (vector <int> &V, int position, int S, int selfLoops)
 {
-    //cout << "[nextVector]: position = " << position << ", S = " << S << endl;
-    //cout << "    ";
-    //printVector(V);
+    //cout << "[nextVector]: position = " << position << ", S = " << S << "    "; printVector(V);
 
     if (position > V.size() || position < 0)
     {
@@ -123,26 +121,47 @@ int nextVector (vector <int> &V, int position, int S, int selfLoops)
     {
         return 0;
     }
-    for (int i=position;i<=S;i++)
+
+
+//    for (int i=position;i<=S;i++)
+//    {
+//        if (selfLoops == 1)
+//        {
+//            V[i] = 1;
+//        }
+//        else if (selfLoops == 0)
+//        {
+//            if (V[i-1] == 1)
+//            {
+//                V[i] = 2;
+//            }
+//            else
+//            {
+//                V[i] = 1;
+//            }
+//        }
+//    }
+    V[position] = -1;
+    if (nextVector(V,position-1,S,selfLoops) == 0)
     {
-        if (selfLoops == 1)
-        {
-            V[i] = 1;
-        }
-        else if (selfLoops == 0)
-        {
-            if (V[i-1] == 1)
-            {
-                V[i] = 2;
-            }
-            else
-            {
-                V[i] = 1;
-            }
-        }
-        
+        return 0;
     }
-    return nextVector(V,position-1,S);
+
+    if (selfLoops == 1)
+    {
+        V[position]=1;
+    }
+    else
+    {
+        if (V[position-1] == 1)
+        {
+            V[position]=2;
+        }
+        else
+        {
+            V[position]=1;
+        }
+    }
 }
 
 
@@ -171,12 +190,13 @@ int main (int argc, char *argv[])
     vector <int> V;
     for (int i=0;i<T;i++)
     {
-        V.insert(V.begin(),1);
+        V.push_back(1 + (1 - selfLoops)*(i % 2));
     }
 
-    while(nextVector(V,T-1,S,selfLoops))
+    do
     {
         printVector(V);
     }
+    while(nextVector(V,T-1,S,selfLoops));
 
 }
