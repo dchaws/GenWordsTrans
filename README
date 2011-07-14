@@ -1,0 +1,80 @@
+// Copyright (C) 2011 David C. Haws
+
+//This program is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+// See LICENSE
+
+
+The program genwords takes in two arguments on the command line, S and T. 
+It will generate all S^T words. 
+
+E.g.
+./genwords 3 2
+ 1  1
+ 1  2
+ 1  3
+ 2  1
+ 2  2
+ 2  3
+ 3  1
+ 3  2
+ 3  3
+
+
+The command line option -L will not allow self-loops (11). 
+
+./genwords 3 2 -L
+ 1  2
+ 1  3
+ 2  1
+ 2  3
+ 3  1
+ 3  2
+
+
+
+The program words2trans will read in from standard input words, one per line,
+and output the transition counts. For example, the path 1212311 has (11) once,
+(12) twice, (21) once, (23) once and (31) once. It will print out a vector of
+length S^2, with the transitions in lexicographic order.
+
+E.g
+./genwords 3 2 -L | ./words2trans 3 2
+  0   1   0   0   0   0   0   0   0 
+  0   0   1   0   0   0   0   0   0 
+  0   0   0   1   0   0   0   0   0 
+  0   0   0   0   0   1   0   0   0 
+  0   0   0   0   0   0   1   0   0 
+  0   0   0   0   0   0   0   1   0 
+
+
+The option -L will not count the self loops. 
+E.g.
+  1   0   0   0   0   0 
+  0   1   0   0   0   0 
+  0   0   1   0   0   0 
+  0   0   0   1   0   0 
+  0   0   0   0   1   0 
+  0   0   0   0   0   1 
+
+
+The option -I will count the initial states.
+E.g.
+  1   0   0   1   0   0   0   0   0 
+  1   0   0   0   1   0   0   0   0 
+  0   1   0   0   0   1   0   0   0 
+  0   1   0   0   0   0   1   0   0 
+  0   0   1   0   0   0   0   1   0 
+  0   0   1   0   0   0   0   0   1 
+
