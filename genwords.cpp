@@ -17,6 +17,7 @@
 
 // Takes in S and T as the first two parameters. Outputs all the words S^T.
 // Option -L produces all words with no self-loops.
+// Option -S produces words with no spaces between the states
 
 #include <iostream>
 #include <iomanip>
@@ -26,14 +27,28 @@
 
 using namespace std;
 
-void printVector (vector <int> &V)
+void printVector (vector <int> &V, int printSpaces)
 {
     int myWidth = 2;
     for (int i=0;i<V.size()-1;i++)
     {
-        cout << setw(myWidth) << V[i] << " ";
+        if (printSpaces == 1)
+        {
+            cout << setw(myWidth) << V[i] << " ";
+        }
+        else if (printSpaces == 0)
+        {
+            cout << V[i];
+        }
     }
-    cout << setw(myWidth) << V[V.size()-1] << endl;
+    if (printSpaces == 1)
+    {
+        cout << setw(myWidth) << V[V.size()-1] << endl;
+    }
+    else if (printSpaces == 0)
+    {
+        cout << V[V.size()-1] << endl;
+    }
 }
 
 // This tries to increase the value of V[position]. 
@@ -159,12 +174,17 @@ int main (int argc, char *argv[])
     int S = atoi(argv[1]);
     int T = atoi(argv[2]);
     int selfLoops = 1; // 1 means allow self-loops, 0 not.
+    int printSpaces = 1; // 1 means print spaces between states, 0 not.
 
     for (int i=3;i<argc;i++)
     {
         if (!strcmp(argv[i],"-L"))
         {
             selfLoops = 0;
+        }
+        if (!strcmp(argv[i],"-S"))
+        {
+            printSpaces = 0;
         }
     }
 
@@ -178,7 +198,7 @@ int main (int argc, char *argv[])
 
     do
     {
-        printVector(V);
+        printVector(V,printSpaces);
     }
     while(nextVector(V,T-1,S,selfLoops));
 
