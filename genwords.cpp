@@ -24,32 +24,9 @@
 #include <vector>
 #include <cstdlib>
 #include <string.h>
+#include "printvector.h"
 
 using namespace std;
-
-void printVector (vector <int> &V, int printSpaces)
-{
-    int myWidth = 2;
-    for (int i=0;i<V.size()-1;i++)
-    {
-        if (printSpaces == 1)
-        {
-            cout << setw(myWidth) << V[i] << " ";
-        }
-        else if (printSpaces == 0)
-        {
-            cout << V[i];
-        }
-    }
-    if (printSpaces == 1)
-    {
-        cout << setw(myWidth) << V[V.size()-1] << endl;
-    }
-    else if (printSpaces == 0)
-    {
-        cout << V[V.size()-1] << endl;
-    }
-}
 
 // This tries to increase the value of V[position]. 
 // Returns 1 on success, and 0 on failure.
