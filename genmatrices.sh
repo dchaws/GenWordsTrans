@@ -27,7 +27,7 @@ fi
 
 if [[ $# -ge 3 ]]
 then
-    if [[ $2 == "-U" ]]
+    if [[ $3 == "-U" ]]
     then
         sortTrans=1
     fi
@@ -59,9 +59,10 @@ fi
 for i in $(seq 2 $numMat)
 do 
     echo Computing $i 
+    date
     if [[ $zipFiles -eq 1 ]]
     then
-        time gzip -d < ${filePre}$(( i - 1))${fileApp}.gz | ./gentrans 3 $i -L | gzip > ${filePre}${i}${fileApp}.gz
+        gzip -d < ${filePre}$(( i - 1))${fileApp}.gz | ./gentrans 3 $i -L | gzip > ${filePre}${i}${fileApp}.gz
     else
         time ./gentrans 3 $i -L < ${filePre}$(( i - 1))${fileApp} > ${filePre}${i}${fileApp}
     fi
@@ -71,7 +72,7 @@ do
     then
         echo "Stripping initial states, sort and uniq and gzip data from run $(( i - 1))."
         # Now take previous run, strip out initial states, sort and uniq. Heck, gzip it too
-        time gzip -d < ${filePre}$(( i - 1))${fileApp}.gz | ./stripinit.sh 3 | sort | uniq | gzip > ${filePre}$(( i - 1))${zipFilesFileApp}.gz
+        gzip -d < ${filePre}$(( i - 1))${fileApp}.gz | ./stripinit.sh 3 | sort | uniq | gzip > ${filePre}$(( i - 1))${zipFilesFileApp}.gz
         rm -f ${filePre}$(( i - 1))${fileApp}.gz
     fi
 
@@ -82,6 +83,6 @@ if [[ $zipFiles -eq 1 && $sortTrans -eq 1 ]]
 then
     echo "Stripping initial states, sort and uniq and gzip data from run $(( i - 1))."
     # Now take previous run, strip out initial states, sort and uniq. Heck, gzip it too
-    time gzip -d < ${filePre}$(( i - 1))${fileApp}.gz | ./stripinit.sh 3 | sort | uniq | gzip > ${filePre}$(( i - 1))${zipFilesFileApp}.gz
+    gzip -d < ${filePre}$(( i - 1))${fileApp}.gz | ./stripinit.sh 3 | sort | uniq | gzip > ${filePre}$(( i - 1))${zipFilesFileApp}.gz
     rm -f ${filePre}$(( i - 1))${fileApp}.gz
 fi
