@@ -24,7 +24,34 @@
 
 using namespace std;
 
+vector <int> readVector (istream &in, int S, int selfLoops)
+{
+    vector <int> V;
+    // First S integers are the initial state
 
+    int x;
+    for (int i=0;i<S;i++)
+    {
+        in >> x;
+        V.push_back(x);
+    }
+    int numTrans;
+    if (selfLoops == 1)
+    {
+        numTrans = S*S;
+    }
+    else
+    {
+        numTrans = S*(S-1);
+    }
+    for (int j=0;j<numTrans;j++)
+    {
+        in >> x;
+        V.push_back(x);
+    }
+
+    return V;
+}
 
 int main (int argc, char *argv[])
 {
@@ -92,6 +119,57 @@ int main (int argc, char *argv[])
         }
     }
     else { // T != 1
+        // Read a vector from standard input. Depends on selfloops or not.
+
+        do 
+        {
+            vector <int> V;
+            V = readVector(cin,S,selfLoops);
+            if (!cin.good())
+            {
+                exit(0);
+            }
+            //cout << "ORIGINAL: ";
+            //printVector(V,printSpaces);
+
+            int oldInit;
+            for (int j=0;j<S;j++)
+            {
+                if (V[j] == 1)
+                {
+                    oldInit = j;
+                }
+                V[j] = 0;
+            }
+            for (int i=0;i<S;i++)
+            {
+                if (i != oldInit || selfLoops == 1)
+                {
+                    V[i] = 1;
+
+                    // Now need to increase transition count for oldInit to i;
+                    int position;
+                    if (selfLoops == 1)
+                    {
+                        position = S*i + oldInit;
+                    }
+                    else
+                    {
+                        position = (S-1)*i + oldInit;
+                        if (i < oldInit)
+                        {
+                            position--;
+                        }
+                    }
+                    position += S;
+                    V[position]++;
+
+                    printVector(V,printSpaces);
+                    V[position]--;
+                    V[i] = 0;
+                }
+            }
+        } while(cin.good());
     }
 
 }
