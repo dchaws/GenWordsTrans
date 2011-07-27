@@ -15,6 +15,10 @@
 
 // See LICENSE
 
+// Takes in S and T as the first two parameters. Outputs all the words S^T.
+// Option -L produces all words with no self-loops.
+// Option -S produces words with no spaces between the states
+
 #include <iostream>
 #include <iomanip>
 #include <vector>
@@ -24,6 +28,10 @@
 
 using namespace std;
 
+// Reads a vector of transitions from in. Assumes
+// the initial states are the first S integers.
+// Then reads in the transitions in lexicographic order
+// while minding selfLoops
 vector <int> readVector (istream &in, int S, int selfLoops)
 {
     vector <int> V;

@@ -94,3 +94,67 @@ Option -S produces words with no spaces between the states
 321
 323
  
+
+The program gentrans is a much more efficient way to simply output all
+transitions of all words.
+
+It takes as input on the command line the number of states S and the length of
+the word.
+
+If T = 1, then it will print all the transitions.
+E.g.
+./genwords 3 1
+
+ 1  0  0  0  0  0  0  0  0  0  0  0
+ 0  1  0  0  0  0  0  0  0  0  0  0
+ 0  0  1  0  0  0  0  0  0  0  0  0
+
+genwords also respect the no selfLoops flag.
+./gentrans 3 1 -L
+ 1  0  0  0  0  0  0  0  0
+ 0  1  0  0  0  0  0  0  0
+ 0  0  1  0  0  0  0  0  0
+
+
+When T=1, then "genwords S T" will read in from the standard input the
+transitions of all words S^(T-1), and output the new transitions.  I.e.
+
+./gentrans 3 1 | ./gentrans 3 2
+ 1  0  0  1  0  0  0  0  0  0  0  0
+ 0  1  0  0  0  0  1  0  0  0  0  0
+ 0  0  1  0  0  0  0  0  0  1  0  0
+ 1  0  0  0  1  0  0  0  0  0  0  0
+ 0  1  0  0  0  0  0  1  0  0  0  0
+ 0  0  1  0  0  0  0  0  0  0  1  0
+ 1  0  0  0  0  1  0  0  0  0  0  0
+ 0  1  0  0  0  0  0  0  1  0  0  0
+ 0  0  1  0  0  0  0  0  0  0  0  1
+
+or without selfloops:
+
+./gentrans 3 1 -L | ./gentrans 3 2 -L
+ 0  1  0  0  0  1  0  0  0
+ 0  0  1  0  0  0  0  1  0
+ 1  0  0  1  0  0  0  0  0
+ 0  0  1  0  0  0  0  0  1
+ 1  0  0  0  1  0  0  0  0
+ 0  1  0  0  0  0  1  0  0
+
+
+This programs works on the simple following recursion. When it reads a line
+which contains the initial state and the transition, it simulates prepending
+the word with all possible states, increasing the transitions from new
+state to the previous initial state.
+
+I.e. the transition (with self loops)
+ 1  0  0  1  0  0  0  0  0  0  0  0
+
+says the word started at 1 and had a transition 1 -> 2.
+When gentrans reads this line it will output the three lines
+ 1  0  0  2  0  0  0  0  0  0  0  0
+ 0  1  0  1  0  0  1  0  0  0  0  0
+ 0  0  1  1  0  0  0  0  0  1  0  0
+
+
+
+

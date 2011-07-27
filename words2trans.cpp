@@ -15,6 +15,10 @@
 
 // See LICENSE
 
+// Takes in S and T as the first two parameters. Outputs all the words S^T.
+// Option -L produces all words with no self-loops.
+// Option -S produces words with no spaces between the states
+
 #include <iostream>
 #include <iomanip>
 #include <string>
