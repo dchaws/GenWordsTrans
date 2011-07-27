@@ -178,3 +178,12 @@ would generate the first 10 design matrices, but gzip the intermediate and
 final results. Also, after the current run of paths of length T, it will take
 the previous result and strip the initial conditions, sort, uniq and zip the
 data. 
+
+Now genmtatrices will do "sort -u" for each transition with initial counts.
+This dramatically improves the speed since the recursive method to
+compute the transitions from T-1 to T only depends on the transitoins!
+Hence, we only need the unique transitions.
+
+
+Added comp_in.sh which takes the gz files output from genmatrices
+and computes normaliz input files.
