@@ -1,6 +1,6 @@
 #!/bin/bash
 
-maxT=100
+maxT=10
 
 if [[ $# -ge 1 ]]
 then
