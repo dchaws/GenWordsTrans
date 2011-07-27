@@ -51,9 +51,9 @@ echo "zipFilesFileApp = $zipFilesFileApp"
 if [[ $zipFiles -eq 1 ]]
 then
 
-    ./gentrans 3 1 | gzip > ${filePre}1${fileApp}.gz
+    ./gentrans 3 1 -L | sort -u | gzip > ${filePre}1${fileApp}.gz
 else
-    ./gentrans 3 1 > ${filePre}1${fileApp}
+    ./gentrans 3 1 -L | sort -u > ${filePre}1${fileApp}
 fi
 
 for i in $(seq 2 $numMat)
@@ -62,9 +62,9 @@ do
     date
     if [[ $zipFiles -eq 1 ]]
     then
-        gzip -d < ${filePre}$(( i - 1))${fileApp}.gz | ./gentrans 3 $i -L | gzip > ${filePre}${i}${fileApp}.gz
+        gzip -d < ${filePre}$(( i - 1))${fileApp}.gz | ./gentrans 3 $i -L | sort -u | gzip > ${filePre}${i}${fileApp}.gz
     else
-        time ./gentrans 3 $i -L < ${filePre}$(( i - 1))${fileApp} > ${filePre}${i}${fileApp}
+        ./gentrans 3 $i -L < ${filePre}$(( i - 1))${fileApp} | sort -u > ${filePre}${i}${fileApp}
     fi
 
    
