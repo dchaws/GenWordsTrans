@@ -75,14 +75,23 @@ int main (int argc, char *argv[])
                     V.push_back(0);
                 }
             }
-            for (int j=0;j<S*S;j++)
+            int numTrans;
+            if (selfLoops == 1)
+            {
+                numTrans = S*S;
+            }
+            else
+            {
+                numTrans = S*(S-1);
+            }
+            for (int j=0;j<numTrans;j++)
             {
                 V.push_back(0);
             }
             printVector(V,printSpaces);
         }
-
-
+    }
+    else { // T != 1
     }
 
 }

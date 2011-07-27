@@ -1,4 +1,10 @@
-all: genwords words2trans
+all: genwords gentrans words2trans
+
+gentrans: gentrans.o printvector.o
+	g++ -o gentrans gentrans.o printvector.o
+
+gentrans.o: gentrans.cpp 
+	g++ -c gentrans.cpp 
 
 genwords: genwords.o printvector.o
 	g++ -o genwords genwords.o printvector.o

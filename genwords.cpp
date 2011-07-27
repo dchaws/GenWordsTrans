@@ -165,6 +165,13 @@ int main (int argc, char *argv[])
         }
     }
 
+    // Error checking
+    if (T < 0 || S < 0)
+    {
+        cout << "T < 0 || S < 0" << endl;
+        exit(0);
+    }
+
     //cout << "S = " << S << ", T = " << T << ", selfLoops = " << selfLoops << endl;
 
     vector <int> V;
