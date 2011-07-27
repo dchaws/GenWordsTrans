@@ -157,4 +157,24 @@ When gentrans reads this line it will output the three lines
 
 
 
+The shell script genmatrices will generate all the design matrices with no self
+loops and S=3 up to a user specified T.
 
+./genmatrices 10
+
+would generate the first 10 design matrices.
+
+
+./genmatrices 10 -Z 
+
+
+would generate the first 10 design matrices, but gzip the intermediate and final
+results. Very important for saving space.
+
+./genmatrices 10 -Z -U
+
+
+would generate the first 10 design matrices, but gzip the intermediate and
+final results. Also, after the current run of paths of length T, it will take
+the previous result and strip the initial conditions, sort, uniq and zip the
+data. 
