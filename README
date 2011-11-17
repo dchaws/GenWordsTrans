@@ -103,7 +103,7 @@ the word.
 
 If T = 1, then it will print all the transitions.
 E.g.
-./genwords 3 1
+./gentrans 3 1
 
  1  0  0  0  0  0  0  0  0  0  0  0
  0  1  0  0  0  0  0  0  0  0  0  0
@@ -116,7 +116,7 @@ genwords also respect the no selfLoops flag.
  0  0  1  0  0  0  0  0  0
 
 
-When T!=1, then "genwords S T" will read in from the standard input the
+When T!=1, then "gentrans S T" will read in from the standard input the
 transitions of all words S^(T-1), and output the new transitions.  I.e.
 
 ./gentrans 3 1 | ./gentrans 3 2
