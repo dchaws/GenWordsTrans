@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Script to convert basic transition counts into Normaliz input.
+# Script to convert basic transition counts into 4ti2 input.
 # Assumes S=3
 
 maxT=10
@@ -20,7 +20,6 @@ for i in $(seq 1 $maxT)
 do 
     echo $i
     mylc=`gzip -d < 3_${i}_gentrans_noloops_trans_noinit.txt.gz | wc -l | awk '{print $1}'`
-    echo "$mylc 6" > 3_${i}_gentrans_noloops_trans_noinit.in
-    gzip -d < 3_${i}_gentrans_noloops_trans_noinit.txt.gz >> 3_${i}_gentrans_noloops_trans_noinit.in
-    echo "1" >> 3_${i}_gentrans_noloops_trans_noinit.in
+    echo "6 $mylc" > 3_${i}_gentrans_noloops_trans_noinit.mat
+    gzip -d < 3_${i}_gentrans_noloops_trans_noinit.txt.gz | ./transpose.sh >> 3_${i}_gentrans_noloops_trans_noinit.mat
 done
